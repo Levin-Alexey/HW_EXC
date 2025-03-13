@@ -1,15 +1,39 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import password.PasswordChecker;
+
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner scanner = new Scanner(System.in);
+        PasswordChecker checker = new PasswordChecker();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        try {
+            System.out.print("Введите минимальную длину пароля: ");
+            int minLength = Integer.parseInt(scanner.nextLine());
+            checker.setMinLength(minLength);
+
+            System.out.print("Введите максимальное число повторений подряд: ");
+            int maxRepeats = Integer.parseInt(scanner.nextLine());
+            checker.setMaxRepeat(maxRepeats);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            return;
+        }
+        System.out.println("Введите пароль или end: ");
+        while (true) {
+            System.out.print("Пароль: ");
+            String password = scanner.nextLine();
+            if (password.equals("end")) {
+                break;
+            }
+            try {
+                boolean isValid = checker.verify(password);
+                System.out.println(isValid ? "Подходит!" : "Не подходит!");
+            } catch (IllegalStateException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                break;
+            }
+        }
+        scanner.close();
         }
     }
-}
