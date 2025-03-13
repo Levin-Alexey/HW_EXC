@@ -7,7 +7,7 @@ public class PasswordChecker {
 
     public void setMinLength(int minLength) {
         if (minLength < 0) {
-            throw new IllegalArgumentException("Минимальная длина пароля должна быть болше 0.");
+            throw new IllegalArgumentException("Минимальная длина пароля должна быть больше 0.");
         }
         this.minLength = minLength;
     }
